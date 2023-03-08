@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+
+<!-- 지정했던 tiles 변수와 경로를 선언 하면 tempate.jsp에 변수 이름으로 반영되어서 실제 tiles가 적용이 된다.-->
+	<definition name="defaultTemplate"
+		template="/WEB-INF/template/default/template.jsp">
+
+		<put-attribute name="header"
+			value="/WEB-INF/template/default/header.jsp" />
+
+		<put-attribute name="carousel"
+			value="/WEB-INF/template/default/carousel.jsp" />
+
+		<put-attribute name="menu"
+			value="/WEB-INF/template/default/menu.jsp" />
+
+		<put-attribute name="footer"
+			value="/WEB-INF/template/default/footer.jsp" />
+
+	</definition>
+
+	<!-- tiles의 요청의 패턴 , body가 적용되는 view의 경로를 설정 -->
+	<!-- views/{1}/{2}.jsp -> {1}/{2} controller에서 반환하는 ModelAndView의 viewName이 mapping이 된다.  -->
+	<definition name="*/*" extends="defaultTemplate"> <!-- extends="defaultTemplate" 상속 -->
+		<put-attribute name="body"
+			value="/WEB-INF/views/{1}/{2}.jsp"></put-attribute>
+	</definition>
+
+</tiles-definitions>
+<!-- kosmo-web 즉 타일즈를 적용하고  싶은 컨테이너에서 타일즈 설정을 해야한다. -->

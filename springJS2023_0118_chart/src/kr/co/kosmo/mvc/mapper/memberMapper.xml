@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="member">
+	<insert id="add" parameterType="mvo">
+		insert into member
+		values(member_seq.nextVal, #{id}, #{pwd}, #{name}, #{age}, #{gender},
+		sysdate)
+	</insert>
+	<select id="idchk" parameterType="String" resultType="int">
+		select
+		count(id) from member where id=#{id}
+	</select>
+
+	<select id="listpage" parameterType="map" resultType="mvo">
+		select *
+		from( select rownum r_num,a.*from(select * from member order by num
+		desc)a)where r_num BETWEEN #{begin} and #{end}
+	</select>
+	<select id="totalCount" resultType="int">
+		select count(*) from member
+	</select>
+	<select id="detail" resultType="mvo" parameterType="int">
+		select * from
+		member where num=#{num}
+	</select>
+
+	<!-- login mapper -->
+	<select id="login" parameterType="mvo" resultType="mvo">
+		select
+		id,pwd,name from member where id = #{id} and pwd = #{pwd}
+	</select>
+
+	<!-- login loggin mapper -->
+	<insert id="logger_in" parameterType="lvo">
+		insert into myloginlog
+		values(myloginlog_seq.nextVal,#{idn},#{reip},#{uagent},#{status},sysdate)
+	</insert>
+
+	<!-- jsonMapper -->
+	<select id="jsonDemo" parameterType="String" resultType="mvo">
+		select *
+		from member where id=#{id}
+	</select>
+
+	<!-- json list mapper -->
+	<select id="jsonList" resultType="mvo">
+		select num,id,name,gender,age,mdate
+		from member
+		order by num desc
+	</select>
+
+</mapper>
+  
